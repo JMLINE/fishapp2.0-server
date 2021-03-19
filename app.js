@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 
 
 //test endpoint--before auth key
-// app.get("/api/about-me2", function (req, res){//
+// app.get("/api/about-me2", function (req, res){
 //   res.send('hey hey hey hey')
 // })
 app.use(require('./middleware/header')) 
