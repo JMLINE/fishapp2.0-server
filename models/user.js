@@ -6,6 +6,3 @@ module.exports = function (sequelize, DataTypes) {
         passwordhash: DataTypes.STRING
     })
 }
-
-
-// change
