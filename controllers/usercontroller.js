@@ -32,6 +32,7 @@ router.post("/createuser", function (req, res) {
     },
     function createError(err) {
       res.send(500, err.message);
+      console.log("this is from usercontroller")
     }
 
   );
