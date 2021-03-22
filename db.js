@@ -4,7 +4,7 @@
   })
   sequelize.authenticate().then(
     function () {
-      console.log("Connected to fished postgres database");
+      console.log("Connected to fishingagain postgres database");
     },
     function (err) {
       console.log(err);
