@@ -4,20 +4,20 @@ var app = express();
 //var authTest = require("./controllers/authtestcontroller.js")
 // var test = require("./controllers/testcontroller");
 var sequelize = require("./db");
-var bodyParser = require("body-parser");
+
 
 var user = require("./controllers/usercontroller");
-var fish =require("./controllers/logcontroller")
+var fish = require("./controllers/logcontroller")
 
 sequelize.sync();
-app.use(bodyParser.json());
+app.use(express.json());
 
 
 //test endpoint--before auth key
 // app.get("/api/about-me2", function (req, res){
 //   res.send('hey hey hey hey')
 // })
-app.use(require('./middleware/header')) 
+app.use(require('./middleware/header'))
 
 app.use("/api/user", user);
 //app.use("/test-controller", test);
@@ -42,6 +42,6 @@ app.use(require('./middleware/validate-session'))
 app.use("/api", fish)
 //app.use('/test', test)
 
-app.listen(process.env.PORT, function() {
+app.listen(process.env.PORT, function () {
   console.log(`app is listening on ${process.env.PORT} and hello world`);
 });
