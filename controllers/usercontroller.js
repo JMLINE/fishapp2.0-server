@@ -1,5 +1,4 @@
-var express = require("express");
-var router = express.Router();
+let router = require("express").Router()
 var sequelize = require("../db");
 var User = sequelize.import("../models/user");
 var jwt = require("jsonwebtoken");
