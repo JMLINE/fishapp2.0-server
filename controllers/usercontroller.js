@@ -1,42 +1,38 @@
 const router = require("express").Router();
-// var router = express.Router();
-var sequelize = require("../db");
 const User = require("../db").import("../models/user");
-var jwt = require("jsonwebtoken");
-var bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+
 let validateSession = require("../middleware/validate-session");
+let sequelize = require("../db");
 
-router.post("/createuser", function (req, res) {
-  //   var userName = "fake@fake.com";
-  //   var password = "ThisIsAPassword";
+router.post('/signup', (req, res) => {
+  let userModel = {
+    username: req.body.user.userName,
+    newEmail: req.body.user.email,
+    password: bcrypt.hashSync(req.body.user.password, 14),
+  };
 
-  var userName = req.body.user.username;
-  var password = req.body.user.password;
-  var newEmail = req.body.user.newEmail;
-
-  User.create({
-    username: userName,
-    passwordhash: bcrypt.hashSync(password, 10),
-    newEmail: newEmail
-  }).then(
-    function createSuccess(user) {
-      var token = jwt.sign({
+  User.create(userModel).then(user => {
+      let token = jwt.sign({
         id: user.id
       }, process.env.JWT_SECRET, {
         expiresIn: 60 * 60 * 24
       });
-      res.json({
-        user: user,
-        message: "created",
-        sessionToken: token
-      });
-    },
-    function createError(err) {
-      res.send(500, err.message);
-      console.log("this is from usercontroller")
-    }
 
-  );
+      res.status(200).json({
+        user: req.body.user.userName,
+        message: 'USER SUCCESSFULLY INITIALIZED',
+        sessionToken: token,
+
+      });
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: err,
+        message: "NO INITIALIZATION TOOK PLACE"
+      });
+    });
 });
 
 // SIGNING IN A USER

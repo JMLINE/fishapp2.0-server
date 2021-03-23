@@ -1,36 +1,40 @@
-var jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
+const User = require("../db").import("../models/user");
 
-let User = require('../models/user')
+const validateSession = (req, res, next) => {
+    const token = req.headers.authorization;
+    console.log("token -->", token);
 
-
-module.exports = function (req, res, next) {
-    if (req.method == "OPTIONS") {
-        next()
-    } else {
-        var sessionToken = req.headers.authorization
-        console.log(sessionToken)
-        sessionToken ? verifyToken() : res.status(403).send({
+    if (!token) {
+        return res.status(403).send({
             auth: false,
-            message: "No Token Provided"
-        })
+            message: "No token provided"
+        });
+    } else {
+        jwt.verify(token, process.env.JWT_SECRET, (err, decodeToken) => {
+            console.log("decodeToken -->", decodeToken);
 
-        function verifyToken() {
-            jwt.verify(sessionToken, process.env.JWT_SECRET, (err, decoded) => {
-                decoded ? findUser(decoded) : res.status(401).send({
-                    error: 'Not Authorized'
-                })
-            })
-        }
+            if (!err && decodeToken) {
+                User.findOne({
+                        where: {
+                            id: decodeToken.id,
+                        },
+                    })
+                    .then((user) => {
+                        console.log("user -->", user);
 
-        function findUser(decoded) {
-            User.findOne({
-                where: {
-                    id: decoded.id
-                }
-            }).then(user => {
-                req.user = user
-                next()
-            })
-        }
+                        if (!user) throw err;
+                        console.log("req -->", req);
+                        req.user = user;
+                        return next();
+                    })
+                    .catch((err) => next(err));
+            } else {
+                req.errors = err;
+                return res.status(500).send(err);
+            }
+        });
     }
-}
+};
+
+module.exports = validateSession;
