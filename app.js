@@ -14,7 +14,7 @@ app.use(require('./middleware/header'))
 
 app.use("/api/user", user);
 
-// app.use(require('./middleware/validate-session'))
+app.use(require('./middleware/validate-session'))
 
 app.use("/api", fish)
 
