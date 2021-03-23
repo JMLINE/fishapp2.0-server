@@ -1,8 +1,8 @@
 const router = require("express").Router();
 
 
-// let logModel = require("../models/fish");
-const logModel = require("../db").import("../models/user");
+let logModel = require("../models/fish");
+
 
 //change from 'log'
 router.get('/fished', function (req, res) {
