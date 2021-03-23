@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 let sequelize = require("../db");
 
-router.post('/create', (req, res) => {
+router.post('/createuser', (req, res) => {
   let userModel = {
     username: req.body.user.userName,
     newEmail: req.body.user.email,
