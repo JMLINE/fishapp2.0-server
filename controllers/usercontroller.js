@@ -1,4 +1,5 @@
-let router = require("express").Router()
+var express = require("express");
+var router = express.Router();
 var sequelize = require("../db");
 var User = sequelize.import("../models/user");
 var jwt = require("jsonwebtoken");
@@ -8,13 +9,13 @@ router.post("/createuser", function (req, res) {
   //   var userName = "fake@fake.com";
   //   var password = "ThisIsAPassword";
 
-  var username = req.body.user.username;
+  var userName = req.body.user.username;
   var password = req.body.user.password;
   var newEmail = req.body.user.newEmail;
 
   User.create({
-    username: username,
-    password: bcrypt.hashSync(password, 10),
+    username: userName,
+    passwordhash: bcrypt.hashSync(password, 10),
     newEmail: newEmail
   }).then(
     function createSuccess(user) {
@@ -24,14 +25,13 @@ router.post("/createuser", function (req, res) {
         expiresIn: 60 * 60 * 24
       });
       res.json({
-        username: username,
+        user: user,
         message: "created",
         sessionToken: token
       });
     },
     function createError(err) {
       res.send(500, err.message);
-      console.log("this is from usercontroller")
     }
 
   );

@@ -1,7 +1,7 @@
-const router = require("express").Router();
-
-
-let logModel = require("../models/fish");
+let express = require('express');
+let router = express.Router();
+let sequelize = require('../db')
+let logModel = sequelize.import('../models/fish.js');
 
 
 //change from 'log'

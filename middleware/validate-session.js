@@ -1,40 +1,36 @@
-const jwt = require("jsonwebtoken");
-const User = require("../db").import("../models/user");
+var jwt = require('jsonwebtoken')
+var sequelize = require('../db')
+var User = sequelize.import('../models/user')
 
-const validateSession = (req, res, next) => {
-    const token = req.headers.authorization;
-    console.log("token -->", token);
 
-    if (!token) {
-        return res.status(403).send({
-            auth: false,
-            message: "No token provided"
-        });
+module.exports = function (req, res, next) {
+    if (req.method == "OPTIONS") {
+        next()
     } else {
-        jwt.verify(token, process.env.JWT_SECRET, (err, decodeToken) => {
-            console.log("decodeToken -->", decodeToken);
+        var sessionToken = req.headers.authorization
+        console.log(sessionToken)
+        sessionToken ? verifyToken() : res.status(403).send({
+            auth: false,
+            message: "No Token Provided"
+        })
 
-            if (!err && decodeToken) {
-                User.findOne({
-                        where: {
-                            id: decodeToken.id,
-                        },
-                    })
-                    .then((user) => {
-                        console.log("user -->", user);
+        function verifyToken() {
+            jwt.verify(sessionToken, process.env.JWT_SECRET, (err, decoded) => {
+                decoded ? findUser(decoded) : res.status(401).send({
+                    error: 'Not Authorized'
+                })
+            })
+        }
 
-                        if (!user) throw err;
-                        console.log("req -->", req);
-                        req.user = user;
-                        return next();
-                    })
-                    .catch((err) => next(err));
-            } else {
-                req.errors = err;
-                return res.status(500).send(err);
-            }
-        });
+        function findUser(decoded) {
+            User.findOne({
+                where: {
+                    id: decoded.id
+                }
+            }).then(user => {
+                req.user = user
+                next()
+            })
+        }
     }
-};
-
-module.exports = validateSession;
+}

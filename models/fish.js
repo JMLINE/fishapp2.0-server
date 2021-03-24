@@ -1,6 +1,6 @@
-module.exports= function(sequelize, DataTypes){
+module.exports = function (sequelize, DataTypes) {
 
-    return sequelize.define('fished',{
+    return sequelize.define('fished', {
         species: DataTypes.STRING,
         size: DataTypes.INTEGER,
         fly: DataTypes.STRING,
