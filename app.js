@@ -4,14 +4,14 @@ var app = express();
 //var authTest = require("./controllers/authtestcontroller.js")
 // var test = require("./controllers/testcontroller");
 var sequelize = require("./db");
-var bodyParser = require("body-parser");
+
 
 var user = require("./controllers/usercontroller");
 var fish = require("./controllers/logcontroller")
 
 sequelize.sync();
-app.use(bodyParser.json());
 
+app.use(express.json());
 
 //test endpoint--before auth key
 // app.get("/api/about-me2", function (req, res){

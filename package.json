@@ -1,23 +1,25 @@
 {
-  "name": "fish-app",
+  "name": "fish-server",
   "version": "1.0.0",
-  "description": "server for fish-app",
+  "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
   },
-  "author": "something",
-  "license": "MIT",
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.19.0",
-    "dotenv": "^5.0.1",
-    "express": "^4.16.3",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
     "jsonwebtoken": "^8.2.0",
-    "pg": "^7.4.1",
-    "pg-hstore": "^2.3.2",
-    "sequelize": "^4.37.0"
+    "pg": "^8.5.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.22.3",
+    "sequelize-cli": "^6.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
   }
 }
-
