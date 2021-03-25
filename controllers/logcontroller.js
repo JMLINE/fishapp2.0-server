@@ -2,10 +2,10 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 let logModel = require('../db.js').import('../models/fish');
-
+const validateSession = require('../middleware/validate-session');
 
 //change from 'log'
-router.get('/fished', function (req, res) {
+router.get('/fished', validateSession, function (req, res) {
     let userid = req.user.id;
     logModel.findAll({
         where: {
@@ -21,7 +21,7 @@ router.get('/fished', function (req, res) {
     )
 })
 
-router.post('/createpost', function (req, res) {
+router.post('/createpost', validateSession, function (req, res) {
     let species = req.body.fished.species;
     let size = req.body.fished.size;
     let fly = req.body.fished.fly;
@@ -50,7 +50,7 @@ router.post('/createpost', function (req, res) {
 })
 //Update this endpoint to include delete.  Delete if breaks
 
-router.delete('/fished/delete/:id', function (req, res) {
+router.delete('/fished/delete/:id', validateSession, function (req, res) {
     let primaryKey = req.params.id;
     let userid = req.user.id;
     logModel.destroy({
@@ -67,7 +67,7 @@ router.delete('/fished/delete/:id', function (req, res) {
 });
 
 
-router.get('/fished/:id', function (req, res) {
+router.get('/fished/:id', validateSession, function (req, res) {
     let primaryKey = req.params.id;
     let userid = req.user.id;
     logModel.findOne({
@@ -82,7 +82,7 @@ router.get('/fished/:id', function (req, res) {
 });
 
 
-router.put('/fished/update/:id', function (req, res) {
+router.put('/fished/update/:id', validateSession, function (req, res) {
     let userid = req.user.id;
     let primaryKey = req.params.id;
     let species = req.body.fished.species;

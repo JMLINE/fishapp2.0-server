@@ -13,7 +13,7 @@ app.use(express.json());
 
 app.use("/api/user", user);
 //app.use("/test-controller", test);
-app.use(require('./middleware/validate-session'))
+// app.use(require('./middleware/validate-session'))
 
 app.use("/api", fish)
 //app.use('/test', test)
