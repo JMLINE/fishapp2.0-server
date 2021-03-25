@@ -1,14 +1,16 @@
-const sequelize = new Sequelize(
-  process.env.DATABASE_URL ||
-  `postgresql://postgres:${encodeURIComponent(
-      process.env.PASS
-    )}@localhost/fishingagain`, {
-    dialect: "postgres",
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false, // very important
-      },
-    },
+const Sequelize = require("sequelize");
+
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+
+  dialect: 'postgres',
+})
+
+sequelize.authenticate().then(
+  function () {
+    console.log("Connected to newmovieapp postgres database");
+  },
+  function (err) {
+    console.log(err);
   }
 );
+module.exports = sequelize;
