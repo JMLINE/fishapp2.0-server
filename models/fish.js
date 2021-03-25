@@ -41,3 +41,5 @@ module.exports = function (sequelize, DataTypes) {
         photo: DataTypes.STRING
     })
 }
+
+//test
