@@ -1,9 +1,7 @@
-var express = require("express");
-var router = express.Router();
-var sequelize = require("../db");
-var User = sequelize.import("../models/user");
-var jwt = require("jsonwebtoken");
-var bcrypt = require("bcryptjs");
+const router = require('express').Router();
+const User = require('../db').import('../models/user');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 router.post("/createuser", function (req, res) {
   //   var userName = "fake@fake.com";

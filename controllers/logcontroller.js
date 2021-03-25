@@ -1,7 +1,7 @@
-let express = require('express');
-let router = express.Router();
-let sequelize = require('../db')
-let logModel = sequelize.import('../models/fish.js');
+const router = require('express').Router();
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+let logModel = require('../db.js').import('../models/fish');
 
 
 //change from 'log'
