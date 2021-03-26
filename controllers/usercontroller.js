@@ -13,7 +13,7 @@ router.post("/createuser", function (req, res) {
 
   User.create({
     username: userName,
-    passwordhash: bcrypt.hashSync(password, 10),
+    password: bcrypt.hashSync(password, 10),
     newEmail: newEmail
   }).then(
     function createSuccess(user) {
@@ -50,7 +50,7 @@ router.post("/signin", function (req, res) {
     user ? comparePasswords(user) : res.send("User not found in our database")
 
     function comparePasswords(user) {
-      bcrypt.compare(password, user.passwordhash, function (err, matches) {
+      bcrypt.compare(password, user.password, function (err, matches) {
         matches ? generateToken(user) : res.json({
           error: "Incorrect Password"
         })
