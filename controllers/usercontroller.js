@@ -7,32 +7,35 @@ router.post("/createuser", function (req, res) {
   //   var userName = "fake@fake.com";
   //   var password = "ThisIsAPassword";
 
-  var userName = req.body.user.username;
+  var username = req.body.user.username;
   var password = req.body.user.password;
   var newEmail = req.body.user.newEmail;
 
   User.create({
-    username: userName,
-    password: bcrypt.hashSync(password, 10),
-    newEmail: newEmail
-  }).then(
-    function createSuccess(user) {
-      var token = jwt.sign({
-        id: user.id
-      }, process.env.JWT_SECRET, {
-        expiresIn: 60 * 60 * 24
-      });
-      res.json({
-        user: user,
-        message: "created",
-        sessionToken: token
-      });
-    },
-    function createError(err) {
-      res.send(500, err.message);
-    }
+      username: username,
+      password: bcrypt.hashSync(password, 10),
+      newEmail: newEmail
+    }).then(
+      function createSuccess(user) {
+        let token = jwt.sign({
+          id: user.id
+        }, process.env.JWT_SECRET, {
+          expiresIn: 60 * 60 * 24
+        });
+        res.json({
+          user: user,
+          message: "created",
+          sessionToken: token
+        });
+      },
 
-  );
+
+    )
+
+    .catch(err => res.status(500).json({
+      error: err
+    }))
+
 });
 
 // SIGNING IN A USER
