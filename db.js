@@ -18,7 +18,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
 
 sequelize.authenticate().then(
   function () {
-    console.log('Connected to pettinder postgres database.');
+    console.log('Connected to fish postgres database.');
   },
   function (err) {
     console.log(err);

@@ -1,7 +1,7 @@
 {
-  "name": "fish-server",
+  "name": "fishingagain",
   "version": "1.0.0",
-  "description": "Workload Log",
+  "description": "Fishes",
   "main": "app.js",
   "engine": {
     "node": "14.x"
