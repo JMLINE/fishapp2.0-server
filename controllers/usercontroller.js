@@ -1,9 +1,9 @@
 const router = require('express').Router();
-const Sequelize = require('../db');
+
 const User = require('../db').import('../models/user');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const validateSession = require('../middleware/validate-session');
+
 
 
 router.post('/createuser', function (req, res) {
@@ -21,7 +21,7 @@ router.post('/createuser', function (req, res) {
         });
         res.json({
           user: user,
-          message: 'Time to Save the World!',
+          message: 'Success',
           token: token
         });
         console.log(token)
@@ -32,8 +32,8 @@ router.post('/createuser', function (req, res) {
     }))
 });
 
-//te
 
+//hello
 
 
 
