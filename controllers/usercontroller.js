@@ -23,6 +23,7 @@ router.post('/createuser', function (req, res) {
           message: 'Time to Save the World!',
           token: token
         });
+        console.log(token)
       }
     )
     .catch(err => res.status(500).json({
