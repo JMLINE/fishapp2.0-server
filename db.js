@@ -16,7 +16,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
 
 sequelize.authenticate().then(
   function () {
-    console.log('Connected to comix-app postgres database');
+    console.log('Connected to fish-app postgres database');
   },
   function (err) {
     console.log(err);
